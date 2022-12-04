@@ -19,6 +19,8 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.R
 builder.Services.AddDbContext<SchoolContext>(options =>
     options.UseSqlServer(connectionString));
 
+builder.Services.AddHostedService<TimedHostedService>();
+
 var app = builder.Build();
 
 CreateDbIfNotExists(app);
