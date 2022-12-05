@@ -6,6 +6,7 @@ using System.Xml.XPath;
 
 using System.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
+using web.Services.GetDataService;
 
 namespace web.Controllers;
 
@@ -37,6 +38,7 @@ public class XMLtoEntity : Controller
                     Console.WriteLine(nav2.Value);
                     //listBox1.Items.Add("price: " + nav2.Value);
                 }
+                GetDataService.getWeatherStationData();
             }
             catch(Exception ex) 
             {
