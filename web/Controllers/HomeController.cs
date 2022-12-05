@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using web.Models;
 using web.Controllers;
+using web.Services.GetDataService;
 
 namespace web.Controllers;
 
@@ -17,6 +18,7 @@ public class HomeController : Controller
 
     public IActionResult Index()
     {
+        GetDataService.getWeatherStationData();
         return View();
     }
 

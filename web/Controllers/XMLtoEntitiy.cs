@@ -7,7 +7,6 @@ using System.Xml.XPath;
 using System.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using System.Data;
-
 namespace web.Controllers;
 
 public class XMLtoEntity : Controller
