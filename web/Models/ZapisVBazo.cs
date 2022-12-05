@@ -5,14 +5,13 @@ namespace web.Models
 {
     public class ZapisVBazo
     {
-        public string? meteoID { get; set; }
-        public double lat { get; set; }
-        public double lon { get; set; }
-        public double alt { get; set; }
-        public string? time { get; set; }
-        public double temp { get; set; }
-        public double hum { get; set; }
-
+        public string meteoID { get; set; }
+        public string lat { get; set; }
+        public string lon { get; set; }
+        public string alt { get; set; }
+        public string time { get; set; }
+        public string temp { get; set; }
+        public string hum { get; set; }
     }
 }
             
