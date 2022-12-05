@@ -6,7 +6,11 @@ using System.Xml.XPath;
 
 using System.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
+<<<<<<< HEAD
 
+=======
+using System.Data;
+>>>>>>> b708ca6ef8892e025218f30d1d7bceedc854fecc
 namespace web.Controllers;
 
 public class XMLtoEntity : Controller
@@ -25,17 +29,98 @@ public class XMLtoEntity : Controller
             XPathDocument doc = new XPathDocument(url);
             XPathNavigator nav = doc.CreateNavigator();
 
-            XPathExpression metadata, lat, lon, alt,time,temp,hum; 
+            XPathExpression metadata; 
             metadata = nav.Compile("/data/metData");
+
             XPathNodeIterator iterator = nav.Select(metadata);
-            //listBox1.Items.Clear();
+
+            ZapisVBazo zvp=new ZapisVBazo();
+
             try
             {
                 while (iterator.MoveNext())
                 {
                     XPathNavigator nav2 = iterator.Current.Clone();
+<<<<<<< HEAD
                     //Console.WriteLine(nav2.Value);
                     //listBox1.Items.Add("price: " + nav2.Value);
+=======
+
+                    nav2.MoveToChild("domain_meteosiId", "");
+                    zvp.meteoID=nav2.Value;
+                    nav2.MoveToParent();
+
+                    nav2.MoveToChild("domain_lat", "");
+                    zvp.lat=nav2.Value;
+                    nav2.MoveToParent();
+
+                    nav2.MoveToChild("domain_lon", "");
+                    zvp.lon=nav2.Value;
+                    nav2.MoveToParent();
+
+                    nav2.MoveToChild("domain_altitude", "");
+                    zvp.alt=nav2.Value;
+                    nav2.MoveToParent();
+
+                    nav2.MoveToChild("t", "");
+                    zvp.temp=nav2.Value;
+                    nav2.MoveToParent();
+
+                    nav2.MoveToChild("tsValid_issued_UTC", "");
+                    zvp.time=nav2.Value;
+                    nav2.MoveToParent();
+
+                    nav2.MoveToChild("rh", "");
+                    zvp.hum=nav2.Value;
+                    nav2.MoveToParent();
+
+                    
+                    int isMeteoIDTrue;
+                    string query = "SELECT COUNT(*) FROM [dbo].[postaja] WHERE meteosiID = '"+zvp.meteoID+"';";
+                    
+                    SqlDataReader x;
+
+                    using(SqlCommand command = new SqlCommand(query, cn))
+                    {
+                        cn.Open();
+                        //Console.WriteLine(query);
+                        x=command.ExecuteReader();
+                        x.Read();
+                        isMeteoIDTrue=x.GetInt32(0);
+                        cn.Close();
+                        
+                    }
+                    Console.WriteLine(zvp.time.Substring(0,16));
+                    //Console.WriteLine(zvp.meteoID+":"+isMeteoIDTrue);
+                    if(isMeteoIDTrue==0)//Če ne obstaja postaja -> dodaj postajo
+                    {
+                        query = "INSERT INTO [dbo].[postaja] VALUES ('"+zvp.meteoID+"',"+zvp.lon+","+zvp.lat+","+zvp.alt+");";
+                        using(SqlCommand command = new SqlCommand(query, cn))
+                        {
+                            cn.Open();
+                            command.ExecuteReader();
+                            cn.Close();
+                        } 
+                    }
+                    /*
+                    int isZapisVMeritvi;
+                    query = "SELECT COUNT(*) FROM [dbo].[meritev] WHERE meteosiID = '"+zvp.meteoID+"';";
+                    
+                    SqlDataReader x;
+
+                    using(SqlCommand command = new SqlCommand(query, cn))
+                    {
+                        cn.Open();
+                        //Console.WriteLine(query);
+                        x=command.ExecuteReader();
+                        x.Read();
+                        isMeteoIDTrue=x.GetInt32(0);
+                        cn.Close();
+                        
+                    }*/
+
+
+>>>>>>> b708ca6ef8892e025218f30d1d7bceedc854fecc
                 }
             }
             catch(Exception ex) 
@@ -64,20 +149,7 @@ public class XMLtoEntity : Controller
                     case "tsValid_issued":Console.WriteLine("-"+xmlFile.Value+"-");break;
                     case "t":Console.WriteLine("-"+xmlFile.Value+"-");break;
                     case "rh":Console.WriteLine("-"+xmlFile.Value+"-");break;
-                       /* string query = "SELECT CASE WHEN meteosiID = '@meteoId' THEN 1 ELSE 0 END FROM [dbo].[postaja];";
-                        using(SqlCommand command = new SqlCommand(query, cn))
-                        {
-                            command.Parameters.AddWithValue("@meteoId",meteoId);
-                            cn.Open();
-                            isMeteoIDTrue=(Boolean)command.ExecuteScalar();
-                            
-                        }
-                        Console.WriteLine(meteoId+":"+isMeteoIDTrue);
-                        /*if(!isMeteoIDTrue)//Če n obstaja postaja dodaj postajo
-                        {
-                            
-
-                        }
+                       /* 
                         //insert v postajo                   break;
                 }
             }*/
