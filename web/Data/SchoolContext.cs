@@ -13,6 +13,7 @@ namespace web.Data
         public DbSet<Course> Courses { get; set; }
         public DbSet<Enrollment> Enrollments { get; set; }
         public DbSet<Student> Students { get; set; }
+        //public DbSet<WeatherStation> WeatherStations { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -20,6 +21,7 @@ namespace web.Data
             modelBuilder.Entity<Course>().ToTable("Course");
             modelBuilder.Entity<Enrollment>().ToTable("Enrollment");
             modelBuilder.Entity<Student>().ToTable("Student");
+            //modelBuilder.Entity<Student>().ToTable("postaja");
         }
     }
 }
