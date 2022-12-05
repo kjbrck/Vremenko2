@@ -75,15 +75,14 @@ public class XMLtoEntity : Controller
                     using(SqlCommand command = new SqlCommand(query, cn))
                     {
                         cn.Open();
-                        //Console.WriteLine(query);
+
                         x=command.ExecuteReader();
                         x.Read();
                         isMeteoIDTrue=x.GetInt32(0);
                         cn.Close();
                         
                     }
-                    Console.WriteLine(zvp.time.Substring(0,16));
-                    //Console.WriteLine(zvp.meteoID+":"+isMeteoIDTrue);
+                    //Console.WriteLine(zvp.time.Substring(0,16));
                     if(isMeteoIDTrue==0)//Če ne obstaja postaja -> dodaj postajo
                     {
                         query = "INSERT INTO [dbo].[postaja] VALUES ('"+zvp.meteoID+"',"+zvp.lon+","+zvp.lat+","+zvp.alt+");";
