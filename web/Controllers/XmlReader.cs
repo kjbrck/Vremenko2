@@ -23,13 +23,14 @@ public class XMLtoEntity : Controller
         string time;
         string temp;
         string hum;
+        //enum stanje(sončno, oblačno, dežuva, sneguva)
         while(xmlFile.Read())
         {
             switch(xmlFile.Name){
-                case "domain_meteosiId":
+                case "domain_meteosiId"://v string meteoID flikn vse kar je tle + break;
                 case "tsValid_issued":
                 case "t":
-                case "rh": Console.WriteLine(xmlFile.ReadElementContentAsString());break;
+                case "rh": Console.WriteLine(xmlFile.ReadElementContentAsString();break;
             }
         }
         Console.ReadLine();
