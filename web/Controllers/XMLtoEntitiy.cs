@@ -6,11 +6,8 @@ using System.Xml.XPath;
 
 using System.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
-<<<<<<< HEAD
 
-=======
 using System.Data;
->>>>>>> b708ca6ef8892e025218f30d1d7bceedc854fecc
 namespace web.Controllers;
 
 public class XMLtoEntity : Controller
@@ -41,10 +38,8 @@ public class XMLtoEntity : Controller
                 while (iterator.MoveNext())
                 {
                     XPathNavigator nav2 = iterator.Current.Clone();
-<<<<<<< HEAD
                     //Console.WriteLine(nav2.Value);
                     //listBox1.Items.Add("price: " + nav2.Value);
-=======
 
                     nav2.MoveToChild("domain_meteosiId", "");
                     zvp.meteoID=nav2.Value;
@@ -120,7 +115,6 @@ public class XMLtoEntity : Controller
                     }*/
 
 
->>>>>>> b708ca6ef8892e025218f30d1d7bceedc854fecc
                 }
             }
             catch(Exception ex) 
