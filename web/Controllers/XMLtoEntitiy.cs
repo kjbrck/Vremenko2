@@ -2,6 +2,7 @@ using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using web.Models;
 using System.Xml;
+using System.Xml.XPath;
 
 using System.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
@@ -12,42 +13,74 @@ public class XMLtoEntity : Controller
 {
     public static void Read(string url)
     {
-        var configuration = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
-
-        //Object precision = configuration.GetValue<Object>("SchoolContext");
-        //tring precision = configuration.GetValue<IList<ConnectionSettings>>("Connections");
-
-        Console.WriteLine("++++");
-        Console.WriteLine(configuration.ToString());
-
-       // SqlConnection cn=new SqlConnection(precision.ToString());
-
-        XmlReader xmlFile;
-        string sql;
-
-        xmlFile = XmlReader.Create(@url, new XmlReaderSettings());
-        string meteoId;
-        string time;
-        string temp;
-        string hum;
-        //enum stanje(sončno, oblačno, dežuva, sneguva)
-        while(xmlFile.Read())
+        using(SqlConnection cn=new SqlConnection("Server=uni-db.database.windows.net;Database=University;User Id=university-sa;Password=yourStrong(!)Password;"))
         {
-            switch(xmlFile.Name){
-                case "domain_meteosiId":meteoId=xmlFile.ReadElementContentAsString();break;//v string meteoID flikn vse kar je tle + break;
-                case "tsValid_issued":time=xmlFile.ReadElementContentAsString();break;
-                case "t":temp=xmlFile.ReadElementContentAsString();break;
-                case "rh":hum=xmlFile.ReadElementContentAsString();
-                   /*if()//Če n obstaja postaja dodaj postajo
-                    {
+            /*
+            XmlReader xmlFile;
+            var settings = new XmlReaderSettings();
+            settings.Async = true;
+            xmlFile = XmlReader.Create(@url, settings);
+            */
 
+            XPathDocument doc = new XPathDocument(url);
+            XPathNavigator nav = doc.CreateNavigator();
 
-                    }
-                    //insert v postajo
-                */
-                break;
+            XPathExpression metadata, lat, lon, alt,time,temp,hum; 
+            metadata = nav.Compile("/data/metData");
+            XPathNodeIterator iterator = nav.Select(metadata);
+            //listBox1.Items.Clear();
+            try
+            {
+                while (iterator.MoveNext())
+                {
+                    XPathNavigator nav2 = iterator.Current.Clone();
+                    Console.WriteLine(nav2.Value);
+                    //listBox1.Items.Add("price: " + nav2.Value);
+                }
             }
+            catch(Exception ex) 
+            {
+                Console.WriteLine(ex.Message);
+            }
+
+            /*
+            string meteoId="";
+            double lat, lon, alt;
+            string time;
+            double temp;
+            double hum;
+            Boolean isMeteoIDTrue;
+            //enum stanje(sončno, oblačno, dežuva, sneguva)
+            while(xmlFile.Read())
+            {
+                //Console.WriteLine("-"+xmlFile.Value+"-");
+                Console.WriteLine(xmlFile.Name+"-"+xmlFile.Value+"-");
+                switch(xmlFile.Name){
+                    case "domain_meteosiId":meteoId=xmlFile.Value+"";break;//v string meteoID flikn vse kar je tle + break;
+                    case "domain_lat":Console.WriteLine("-"+xmlFile.Value+"-");break;
+                        //lat=Double.Parse(xmlFile.Value+"");break;
+                    case "domain_lon":Console.WriteLine("-"+xmlFile.Value+"-");break;
+                    case "domain_altitude":Console.WriteLine("-"+xmlFile.Value+"-");break;
+                    case "tsValid_issued":Console.WriteLine("-"+xmlFile.Value+"-");break;
+                    case "t":Console.WriteLine("-"+xmlFile.Value+"-");break;
+                    case "rh":Console.WriteLine("-"+xmlFile.Value+"-");break;
+                       /* string query = "SELECT CASE WHEN meteosiID = '@meteoId' THEN 1 ELSE 0 END FROM [dbo].[postaja];";
+                        using(SqlCommand command = new SqlCommand(query, cn))
+                        {
+                            command.Parameters.AddWithValue("@meteoId",meteoId);
+                            cn.Open();
+                            isMeteoIDTrue=(Boolean)command.ExecuteScalar();
+                            
+                        }
+                        Console.WriteLine(meteoId+":"+isMeteoIDTrue);
+                        /*if(!isMeteoIDTrue)//Če n obstaja postaja dodaj postajo
+                        {
+                            
+
+                        }
+                        //insert v postajo                   break;
+                }
+            }*/
         }
-        Console.ReadLine();
     }
 }
