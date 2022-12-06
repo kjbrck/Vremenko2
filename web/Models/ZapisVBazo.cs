@@ -5,10 +5,10 @@ namespace web.Models
 {
     public class ZapisVBazo
     {
-        /*enum Stanje
+        enum Stanje
         {
             
-        }*/
+        }
         public string meteoID { get; set; }
         public string lat { get; set; }
         public string lon { get; set; }
