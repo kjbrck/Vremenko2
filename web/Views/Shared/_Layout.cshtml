@@ -10,7 +10,7 @@
 </head>
 <body class="bg-color">
     <header>
-        <nav id="navbar"class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light">
+        <nav class="navbar navbar-expand-sm navbarr">
             <div class="container-fluid">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Vremenko</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -41,7 +41,7 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
+    <footer class="footer foo" style="border-top: 1px black solid; color: white">
         <div class="container">
             &copy; 2022 - University of Ljubljana
         </div>
@@ -54,12 +54,22 @@
 
 <style>
     body{
-        background-color: #05FFFF;
+        background-color: whitesmoke;
     }
 
-    #navbar{
+    .navbarr{
         background-color: #03ADAD;
         border-bottom: black 1px solid;
+        color: white;
+    }
+
+    .home{
+        color: white;
+    }
+
+    .foo{
+        background-color: #03ADAD;
+        border-top: black 1px solid;
         color: white;
     }
 </style>

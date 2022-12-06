@@ -2,7 +2,7 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
+<div class="text-center clearfix">
     @using web.Services.GetDataService;
     @foreach(WeatherStation station in GetDataService.ws){
         @if(station != null){
@@ -30,5 +30,12 @@
         top: 50%;
         border: 1px black solid;
         border-radius: 1px;
+        background-color: #03ADAD;
+        color: white;
+    }
+    .clearfix::after {
+        content: "";
+        clear: both;
+        display: table;
     }
 </style>
