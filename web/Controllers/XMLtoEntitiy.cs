@@ -109,7 +109,6 @@ public class XMLtoEntity : Controller
                         {
                             cn.Open();
                             command.ExecuteNonQuery();
-                            command.ExecuteReader();
                             cn.Close();
                         }
                     }
