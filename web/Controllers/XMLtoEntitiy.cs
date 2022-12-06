@@ -102,6 +102,7 @@ public class XMLtoEntity : Controller
                         cn.Close();
                         
                     }
+                    //Console.WriteLine(zvp.meteoID+" "+isZapisVMeritvi);
                     if(isZapisVMeritvi==0)
                     {
                         /*
