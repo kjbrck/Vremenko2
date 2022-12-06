@@ -39,6 +39,7 @@ public class XMLtoEntity : Controller
 
                     nav2.MoveToChild("domain_shortTitle", "");
                     zvp.name=nav2.Value;
+                    zvp.name=zvp.name.ToUpper();
                     nav2.MoveToParent();
 
                     nav2.MoveToChild("domain_lat", "");
