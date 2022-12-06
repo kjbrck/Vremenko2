@@ -16,16 +16,6 @@ public class XMLtoEntity : Controller
     {
         using(SqlConnection cn=new SqlConnection("Server=uni-db.database.windows.net;Database=University;User Id=university-sa;Password=yourStrong(!)Password;"))
         {
-            /*
-            XmlReader xmlFile;
-            var settings = new XmlReaderSettings();
-            settings.Async = true;
-            xmlFile = XmlReader.Create(@url, settings);
-
-            INSERT INTO [dbo].[meritev]
-            VALUES(CONVERT(DATETIME, '2002-11-22 01:01:59', 120),'BABNO-POL_',4.4,2.5);
-
-            */
 
             XPathDocument doc = new XPathDocument(url);
             XPathNavigator nav = doc.CreateNavigator();
@@ -42,8 +32,6 @@ public class XMLtoEntity : Controller
                 while (iterator.MoveNext())
                 {
                     XPathNavigator nav2 = iterator.Current.Clone();
-                    //Console.WriteLine(nav2.Value);
-                    //listBox1.Items.Add("price: " + nav2.Value);
 
                     nav2.MoveToChild("domain_meteosiId", "");
                     zvp.meteoID=nav2.Value;
@@ -120,11 +108,9 @@ public class XMLtoEntity : Controller
                         using(SqlCommand command = new SqlCommand(query, cn))
                         {
                             cn.Open();
-                            x=command.ExecuteReader();
+                            command.ExecuteReader();
                             cn.Close();
- 
                         }
-
                     }
                 }
             }
