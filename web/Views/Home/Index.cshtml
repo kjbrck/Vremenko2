@@ -8,8 +8,19 @@
         @if(station != null){
             <div class="square">
                 <h4>@station.MeteoId</h4>
-                <h2>@station.Temp°C</h2>
-                <h7>Vlažnost: @station.Hum%</h7>
+                @if(station.Temp != null){
+                    <h2>@station.Temp°C</h2>
+                }
+                else{
+                    <h2>Ni podatka</h2>
+                }
+                @if(station.Hum != null){
+                    <h7>Vlažnost: @station.Hum%</h7> 
+                }
+                else{
+                    <h7>Ni podatka</h7>
+                }
+                
             </div>  
         }
         else{
