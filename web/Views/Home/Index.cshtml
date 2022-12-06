@@ -7,7 +7,12 @@
     @foreach(WeatherStation station in GetDataService.ws){
         @if(station != null){
             <div class="square">
-                <h4>@station.MeteoId</h4>
+                @if(@station.Name.Equals("")){
+                    <h4>@station.MeteoId</h4>
+                }
+                else{
+                  <h4>@station.Name</h4>  
+                }
                 @if(station.Temp != null){
                     <h2>@station.Temp°C</h2>
                 }
