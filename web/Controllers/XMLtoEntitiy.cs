@@ -37,6 +37,10 @@ public class XMLtoEntity : Controller
                     zvp.meteoID=nav2.Value;
                     nav2.MoveToParent();
 
+                    nav2.MoveToChild("domain_shortTitle", "");
+                    zvp.name=nav2.Value;
+                    nav2.MoveToParent();
+
                     nav2.MoveToChild("domain_lat", "");
                     zvp.lat=nav2.Value;
                     nav2.MoveToParent();
@@ -61,6 +65,14 @@ public class XMLtoEntity : Controller
                     zvp.hum=nav2.Value;
                     nav2.MoveToParent();
 
+                    nav2.MoveToChild("nn_icon-wwsyn_icon", "");
+                    zvp.oblaki=nav2.Value;
+                    nav2.MoveToParent();
+
+                    nav2.MoveToChild("wwsyn_icon", "");
+                    zvp.vPojav=nav2.Value;
+                    nav2.MoveToParent();
+
                     
                     int isMeteoIDTrue;
                     string query = "SELECT COUNT(*) FROM [dbo].[postaja] WHERE meteosiID = '"+zvp.meteoID+"';";
@@ -79,7 +91,7 @@ public class XMLtoEntity : Controller
                     }
                     if(isMeteoIDTrue==0)//Če ne obstaja postaja -> dodaj postajo
                     {
-                        query = "INSERT INTO [dbo].[postaja] VALUES ('"+zvp.meteoID+"',"+zvp.lon+","+zvp.lat+","+zvp.alt+");";
+                        query = "INSERT INTO [dbo].[postaja] VALUES ('"+zvp.meteoID+"',"+zvp.lon+","+zvp.lat+","+zvp.alt+",'"+zvp.name+"');";
                         using(SqlCommand command = new SqlCommand(query, cn))
                         {
                             cn.Open();
@@ -112,13 +124,13 @@ public class XMLtoEntity : Controller
                         }
                         Console.WriteLine(zvp.meteoID);*/
                         if(zvp.hum==""){
-                            zvp.hum="0.0";    
+                            zvp.hum="null";    
                         }
                         if(zvp.temp==""){
-                            zvp.temp="0.0";    
+                            zvp.temp="null";    
                         }
 
-                        query = "INSERT INTO [dbo].[meritev] VALUES(CONVERT(DATETIME, '"+tempS[2]+"-"+tempS[1]+"-"+tempS[0]+" "+tempS[3]+":"+tempS[4]+":00', 120),'"+zvp.meteoID+"',"+zvp.temp+","+zvp.hum+");";
+                        query = "INSERT INTO [dbo].[meritev] VALUES(CONVERT(DATETIME, '"+tempS[2]+"-"+tempS[1]+"-"+tempS[0]+" "+tempS[3]+":"+tempS[4]+":00', 120),'"+zvp.meteoID+"',"+zvp.temp+","+zvp.hum+",'"+zvp.oblaki+"','"+zvp.vPojav+"');";
                         using(SqlCommand command = new SqlCommand(query, cn))
                         {
                             cn.Open();
