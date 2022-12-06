@@ -102,13 +102,27 @@ public class XMLtoEntity : Controller
                         cn.Close();
                         
                     }
+                    //Console.WriteLine(zvp.meteoID+" "+isZapisVMeritvi);
                     if(isZapisVMeritvi==0)
                     {
+                        /*
+                        foreach(string tempX in tempS)
+                        {
+                            Console.WriteLine(tempX);
+                        }
+                        Console.WriteLine(zvp.meteoID);*/
+                        if(zvp.hum==""){
+                            zvp.hum="0.0";    
+                        }
+                        if(zvp.temp==""){
+                            zvp.temp="0.0";    
+                        }
+
                         query = "INSERT INTO [dbo].[meritev] VALUES(CONVERT(DATETIME, '"+tempS[2]+"-"+tempS[1]+"-"+tempS[0]+" "+tempS[3]+":"+tempS[4]+":00', 120),'"+zvp.meteoID+"',"+zvp.temp+","+zvp.hum+");";
                         using(SqlCommand command = new SqlCommand(query, cn))
                         {
                             cn.Open();
-                            command.ExecuteNonQuery();
+                            command.ExecuteScalar();
                             cn.Close();
                         }
                     }
