@@ -1,4 +1,6 @@
 using web.Controllers;
+using web.Services.GetDataService;
+
 public class TimedHostedService : IHostedService, IDisposable
 {
     //private int executionCount = 0;
@@ -29,6 +31,7 @@ public class TimedHostedService : IHostedService, IDisposable
             "Timed Hosted Service is working. Count: {Count}", count);
             */
         XMLtoEntity.Read("https://meteo.arso.gov.si/uploads/probase/www/observ/surface/text/sl/observationAms_si_latest.xml");
+        GetDataService.getWeatherStationData();
     }
 
     public Task StopAsync(CancellationToken stoppingToken)
