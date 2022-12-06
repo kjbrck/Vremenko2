@@ -32,14 +32,4 @@ public class HomeController : Controller
     {
         return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
     }
-    /*
-    public static async void ZazeniAsync()
-    {
-        var timer = new PeriodicTimer(TimeSpan.FromSeconds(1));
-
-        while (await timer.WaitForNextTickAsync())
-        {
-            XMLtoEntity.Read("https://meteo.arso.gov.si/uploads/probase/www/observ/surface/text/sl/observationAms_si_latest.xml");
-        }
-    }*/
 }
