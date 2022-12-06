@@ -21,6 +21,10 @@ public class XMLtoEntity : Controller
             var settings = new XmlReaderSettings();
             settings.Async = true;
             xmlFile = XmlReader.Create(@url, settings);
+
+            INSERT INTO [dbo].[meritev]
+            VALUES(CONVERT(DATETIME, '2002-11-22 01:01:59', 120),'BABNO-POL_',4.4,2.5);
+
             */
 
             XPathDocument doc = new XPathDocument(url);
@@ -85,7 +89,6 @@ public class XMLtoEntity : Controller
                         cn.Close();
                         
                     }
-                    //Console.WriteLine(zvp.time.Substring(0,16));
                     if(isMeteoIDTrue==0)//Če ne obstaja postaja -> dodaj postajo
                     {
                         query = "INSERT INTO [dbo].[postaja] VALUES ('"+zvp.meteoID+"',"+zvp.lon+","+zvp.lat+","+zvp.alt+");";
@@ -96,56 +99,38 @@ public class XMLtoEntity : Controller
                             cn.Close();
                         } 
                     }
-                    /*
-                    int isZapisVMeritvi;
-                    query = "SELECT COUNT(*) FROM [dbo].[meritev] WHERE meteosiID = '"+zvp.meteoID+"';";
                     
-                    SqlDataReader x;
+                    int isZapisVMeritvi;
+                    string[] tempS= zvp.time.Split('.',' ',':');
+                   
+                    query = "SELECT COUNT(*) FROM [dbo].[meritev] WHERE name = '"+zvp.meteoID+"' AND date = CONVERT(DATETIME, '"+tempS[2]+"-"+tempS[1]+"-"+tempS[0]+" "+tempS[3]+":"+tempS[4]+":00', 120);";
 
                     using(SqlCommand command = new SqlCommand(query, cn))
                     {
                         cn.Open();
-                        //Console.WriteLine(query);
                         x=command.ExecuteReader();
                         x.Read();
-                        isMeteoIDTrue=x.GetInt32(0);
+                        isZapisVMeritvi=x.GetInt32(0);
                         cn.Close();
                         
-                    }*/
+                    }
+                    if(isZapisVMeritvi==0)
+                    {
+                        query = "INSERT INTO [dbo].[meritev] VALUES(CONVERT(DATETIME, '"+tempS[2]+"-"+tempS[1]+"-"+tempS[0]+" "+tempS[3]+":"+tempS[4]+":00', 120),'"+zvp.meteoID+"',"+zvp.temp+","+zvp.hum+");";
+                        using(SqlCommand command = new SqlCommand(query, cn))
+                        {
+                            cn.Open();
+                            x=command.ExecuteReader();
+                            cn.Close();
+ 
+                        }
 
-
+                    }
                 }
             }
-            catch(Exception ex) 
-            {
-                Console.WriteLine(ex.Message);
+            catch(Exception e){
+                Console.WriteLine(e.StackTrace);
             }
-
-            /*
-            string meteoId="";
-            double lat, lon, alt;
-            string time;
-            double temp;
-            double hum;
-            Boolean isMeteoIDTrue;
-            //enum stanje(sončno, oblačno, dežuva, sneguva)
-            while(xmlFile.Read())
-            {
-                //Console.WriteLine("-"+xmlFile.Value+"-");
-                Console.WriteLine(xmlFile.Name+"-"+xmlFile.Value+"-");
-                switch(xmlFile.Name){
-                    case "domain_meteosiId":meteoId=xmlFile.Value+"";break;//v string meteoID flikn vse kar je tle + break;
-                    case "domain_lat":Console.WriteLine("-"+xmlFile.Value+"-");break;
-                        //lat=Double.Parse(xmlFile.Value+"");break;
-                    case "domain_lon":Console.WriteLine("-"+xmlFile.Value+"-");break;
-                    case "domain_altitude":Console.WriteLine("-"+xmlFile.Value+"-");break;
-                    case "tsValid_issued":Console.WriteLine("-"+xmlFile.Value+"-");break;
-                    case "t":Console.WriteLine("-"+xmlFile.Value+"-");break;
-                    case "rh":Console.WriteLine("-"+xmlFile.Value+"-");break;
-                       /* 
-                        //insert v postajo                   break;
-                }
-            }*/
         }
     }
 }
