@@ -5,9 +5,14 @@ namespace web.Models
 {
     public class ZapisVBazo
     {
-        enum Stanje
+        public enum olbacnost
         {
-            
+            clear, mostClear, slightClear, partCloudy, modCloudy, prevCloudy, overcast, FG
+        }
+        public enum vremPojav
+        {
+            FG, DZ, FZDZ, RA, FZRA, RASN, SN, SHRA, SHRASN,
+            SHSN, SHGR, TS, TSRA, TSRASN, TSS, TSGR
         }
         public string meteoID { get; set; }
         public string lat { get; set; }
@@ -16,6 +21,8 @@ namespace web.Models
         public string time { get; set; }
         public string temp { get; set; }
         public string hum { get; set; }
+        public olbacnost oblaki{ get; set; }
+        public vremPojav vPojav{ get; set; }
     }
 }
             
