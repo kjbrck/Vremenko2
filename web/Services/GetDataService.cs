@@ -26,8 +26,13 @@ public class GetDataService{
                     ws[st] = new WeatherStation();
                     ws[st].MeteoId = reader.GetString(0);
                     ws[st].Time = reader.GetDateTime(1);
-                    ws[st].Temp = reader.GetFloat(2);
-                    ws[st].Hum = reader.GetFloat(3);
+                    if(!reader.IsDBNull(2)){
+                        ws[st].Temp = reader.GetFloat(2);
+                    }
+                    if(!reader.IsDBNull(3)){
+                        ws[st].Hum = reader.GetFloat(3);
+                    }
+                    
                     //Console.WriteLine("{0}\t{1}\t{2}", ws[st].MeteoId, ws[st].Temp, ws[st].Hum);
                     st++;
                 }
