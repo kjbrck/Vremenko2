@@ -120,7 +120,7 @@ public class XMLtoEntity : Controller
                         using(SqlCommand command = new SqlCommand(query, cn))
                         {
                             cn.Open();
-                            x=command.ExecuteReader();
+                            command.ExecuteNonQuery();
                             cn.Close();
  
                         }

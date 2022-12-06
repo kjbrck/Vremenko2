@@ -3,12 +3,6 @@
 }
 
 <div class="text-center">
-    <p>display za krajevne placeholderje</p>
-    <div class="square">
-        <h4>Ljubljana</h4>
-        <h2>18°C</h2>
-        <h7>Vlažnost: 90%</h7>
-    </div>
     @using web.Services.GetDataService;
     @foreach(WeatherStation station in GetDataService.ws){
         @if(station != null){
@@ -17,6 +11,9 @@
                 <h2>@station.Temp°C</h2>
                 <h7>Vlažnost: @station.Hum%</h7>
             </div>  
+        }
+        else{
+            break;
         }
     }
     
