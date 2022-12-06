@@ -10,7 +10,7 @@ public class GetDataService{
     public static WeatherStation[] getWeatherStationData(){
         using(SqlConnection cn=new SqlConnection("Server=uni-db.database.windows.net;Database=University;User Id=university-sa;Password=yourStrong(!)Password;"))
         {
-        string query = "select m.name, m.date, m.temp, m.hum, p.name from [dbo].[meritev] m inner join (select name, max(date) as MaxDate from [dbo].[meritev] group by name) tm on m.name = tm.name and m.date = tm.MaxDate inner join [dbo].[postaja] p on p.meteosiID = m.name order by m.name asc;";
+        string query = "select m.name, m.date, m.temp, m.hum, p.name, oblacnost from [dbo].[meritev] m inner join (select name, max(date) as MaxDate from [dbo].[meritev] group by name) tm on m.name = tm.name and m.date = tm.MaxDate inner join [dbo].[postaja] p on p.meteosiID = m.name order by m.name asc;";
         using(SqlCommand command = new SqlCommand(query, cn))
         {
             cn.Open();
@@ -33,7 +33,13 @@ public class GetDataService{
                         ws[st].Hum = reader.GetFloat(3);
                     }
                     ws[st].Name = reader.GetString(4);
-                    //Console.WriteLine("{0}\t{1}\t{2}", ws[st].MeteoId, ws[st].Temp, ws[st].Hum);
+                    if(reader.GetString(5).Equals("")){
+                        ws[st].Img = "";
+                    }
+                    else{
+                        ws[st].Img = reader.GetString(5);
+                    }
+                    //Console.WriteLine("{0}", ws[st].Img);
                     st++;
                 }
             }

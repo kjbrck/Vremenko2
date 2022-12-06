@@ -19,6 +19,10 @@
                 else{
                     <h2>Ni podatka</h2>
                 }
+                @if(station.Img.Equals("")){}
+                else{
+                   <img src="~/img/@(station.Img).png" style="position: absolute; height: 80px; width: 80px; left: 0px; top: 53px"> 
+                }
                 @if(station.Hum != null){
                     <h7>Vlažnost: @station.Hum%</h7> 
                 }
@@ -37,6 +41,7 @@
 
 <style>
     .square{
+        position:relative;
         padding-left: 5px;
         padding-right: 5px;
         margin: 20px;

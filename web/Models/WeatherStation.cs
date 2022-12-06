@@ -7,5 +7,6 @@ namespace web.Models
         public float? Temp { get; set; }
         public float? Hum { get; set; }
         public string? Name { get; set; }
+        public string? Img { get; set; }
     }
 }
