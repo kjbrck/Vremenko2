@@ -133,7 +133,7 @@ public class XMLtoEntity : Controller
                         }
 
                         query = "INSERT INTO [dbo].[meritev] VALUES(CONVERT(DATETIME, '"+tempS[2]+"-"+tempS[1]+"-"+tempS[0]+" "+tempS[3]+":"+tempS[4]+":00', 120),'"+zvp.meteoID+"',"+zvp.temp+","+zvp.hum+",'"+zvp.oblaki+"','"+zvp.vPojav+"');";
-                        Console.WriteLine(query);
+                        //Console.WriteLine(query);
                         using(SqlCommand command = new SqlCommand(query, cn))
                         {
                             cn.Open();
