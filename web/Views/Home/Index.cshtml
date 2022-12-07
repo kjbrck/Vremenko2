@@ -6,31 +6,36 @@
     @using web.Services.GetDataService;
     @foreach(WeatherStation station in GetDataService.ws){
         @if(station != null){
-            <div class="square">
-                @if(@station.Name.Equals("")){
-                    <h4>@station.MeteoId</h4>
-                }
-                else{
-                  <h4>@station.Name</h4>  
-                }
-                @if(station.Temp != null){
-                    <h2>@station.Temp°C</h2>
-                }
-                else{
-                    <h2>Ni podatka</h2>
-                }
-                @if(station.Img.Equals("")){}
-                else{
-                   <img src="~/img/@(station.Img).png" style="position: absolute; height: 80px; width: 80px; left: 0px; top: 53px"> 
-                }
-                @if(station.Hum != null){
-                    <h7>Vlažnost: @station.Hum%</h7> 
-                }
-                else{
-                    <h7>Ni podatka</h7>
-                }
+            <div class="outer">
+                <div class="square text-center">
+                    @if(@station.Name.Equals("")){
+                        <h4>@station.MeteoId</h4>
+                    }
+                    else{
+                    <h4>@station.Name</h4>  
+                    }
+                    @if(station.Temp != null){
+                        <h2>@station.Temp°C</h2>
+                    }
+                    else{
+                        <h2>Ni podatka</h2>
+                    }
+                    @if(station.Img.Equals("")){}
+                    else{
+                    <img src="~/img/@(station.Img).png" style="position: absolute; height: 80px; width: 80px; left: 0px; top: 53px"> 
+                    }
+                    @if(station.Hum != null){
+                        <h7>Vlažnost: @station.Hum%</h7> 
+                    }
+                    else{
+                        <h7>Ni podatka</h7>
+                    }
+                </div>
+                <div class="test">
+                <p></p>
+                </div>
             </div>
-             
+            
         }
         else{
             break;
@@ -40,8 +45,9 @@
 </div>
 
 <style>
-    .square{
-        position:relative;
+
+    .outer{
+        position: relative;
         padding-left: 5px;
         padding-right: 5px;
         margin: 20px;
@@ -52,31 +58,42 @@
         border: 1px black solid;
         border-radius: 1px;
         background-color: #03ADAD;
+    }
+
+    .square{
+        position: relative;
         color: white;
         word-break: break-word;
+        user-select: none;
+        -moz-user-select: none;
+        -khtml-user-select: none;
+        -webkit-user-select: none;
+        -o-user-select: none;
     }
 
     .test{
         position: absolute;
-        padding-left: 5px;
-        padding-right: 5px;
-        margin: 20px;
+        margin: 0px;
         width: 265px;
         height: 138px;
-        float: left;
-        top: 0px;
-        left: 0px;
         border: 1px black solid;
         border-radius: 1px;
         background-color: #03ADAD;
         color: white;
         word-break: break-word;
+        left: -1px;
+        top: -1px;
         display: none;
+        -webkit-transition: opacity .5s ease;
+    }
+
+    .square:hover + .test{
+        display: block;
         z-index: 1;
     }
 
-    .square:hover + .square.test{
-        display: inline-block;
+    .test:hover + .square {
+        display: none;
     }
 
     h4{
