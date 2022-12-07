@@ -93,6 +93,7 @@ public class XMLtoEntity : Controller
                     if(isMeteoIDTrue==0)//Če ne obstaja postaja -> dodaj postajo
                     {
                         query = "INSERT INTO [dbo].[postaja] VALUES ('"+zvp.meteoID+"',"+zvp.lon+","+zvp.lat+","+zvp.alt+",'"+zvp.name+"');";
+                        Console.WriteLine(query);
                         using(SqlCommand command = new SqlCommand(query, cn))
                         {
                             cn.Open();
@@ -132,10 +133,11 @@ public class XMLtoEntity : Controller
                         }
 
                         query = "INSERT INTO [dbo].[meritev] VALUES(CONVERT(DATETIME, '"+tempS[2]+"-"+tempS[1]+"-"+tempS[0]+" "+tempS[3]+":"+tempS[4]+":00', 120),'"+zvp.meteoID+"',"+zvp.temp+","+zvp.hum+",'"+zvp.oblaki+"','"+zvp.vPojav+"');";
+                        Console.WriteLine(query);
                         using(SqlCommand command = new SqlCommand(query, cn))
                         {
                             cn.Open();
-                            command.ExecuteScalar();
+                            command.ExecuteNonQuery();
                             cn.Close();
                         }
                     }
