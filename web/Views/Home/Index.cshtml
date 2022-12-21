@@ -2,48 +2,61 @@
     ViewData["Title"] = "Vremenko";
 }
 
-<div class="text-center clearfix">
-    @using web.Services.GetDataService;
-    @foreach(WeatherStation station in GetDataService.ws){
-        @if(station != null){
-            <div class="outer">
-                <div class="square text-center">
-                    @if(@station.Name.Equals("")){
-                        <h4>@station.MeteoId</h4>
-                    }
-                    else{
-                    <h4>@station.Name</h4>  
-                    }
-                    @if(station.Temp != null){
-                        <h2>@station.Temp°C</h2>
-                    }
-                    else{
-                        <h2>Ni podatka</h2>
-                    }
-                    @if(station.Img.Equals("")){}
-                    else{
-                    <img src="~/img/@(station.Img).png" style="position: absolute; height: 80px; width: 80px; left: 0px; top: 53px"> 
-                    }
-                    @if(station.Hum != null){
-                        <h7>@station.Time.ToString("HH:mm") UTC</h7> 
-                    }
-                    else{
-                        <h7>Ni podatka</h7>
-                    }
-                </div>
-                <div class="test">
-                <p></p>
-                </div>
-            </div>
-            
-        }
-        else{
-            break;
-        }
-    }
-    
-</div>
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
 
+@if(!SignInManager.IsSignedIn(User)){
+    <div class="text-center clearfix">
+        @using web.Services.GetDataService;
+        @foreach(WeatherStation station in GetDataService.ws){
+            @if(station != null){
+                <div class="outer">
+                    <div class="square text-center">
+                        @if(@station.Name.Equals("")){
+                            <h4>@station.MeteoId</h4>
+                        }
+                        else{
+                        <h4>@station.Name</h4>  
+                        }
+                        @if(station.Temp != null){
+                            <h2>@station.Temp°C</h2>
+                        }
+                        else{
+                            <h2>Ni podatka</h2>
+                        }
+                        @if(station.Img.Equals("")){}
+                        else{
+                        <img src="~/img/@(station.Img).png" style="position: absolute; height: 80px; width: 80px; left: 0px; top: 53px"> 
+                        }
+                        @if(station.Hum != null){
+                            <h7>@station.Time.ToString("HH:mm") UTC</h7> 
+                        }
+                        else{
+                            <h7>Ni podatka</h7>
+                        }
+                    </div>
+                    <div class="test">
+                    <h7>Nadmorska višina: @station.Alt m</h7>
+                    <br>
+                    <h7>Zemljepisna širina: @station.Lat</h7>
+                    <br>
+                    <h7>Zemljepisna dolžina: @station.Long</h7>
+                    <br>
+                    <h7>Vlažnost: @station.Hum%</h7>
+                    </div>
+                </div>
+                
+            }
+            else{
+                break;
+            }
+        }  
+    </div>
+}
+else{
+    <p>Izbrane postaje posameznega uporabnika.</p>
+}
 <style>
 
     .outer{
@@ -84,7 +97,7 @@
         left: -1px;
         top: -1px;
         display: none;
-        -webkit-transition: opacity .5s ease;
+        -webkit-transition: opacity 1s ease;
     }
 
     .square:hover + .test{

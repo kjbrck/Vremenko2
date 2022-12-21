@@ -25,6 +25,21 @@
     </div>
 </div>
 
+<br>
+<div class="row col-md-6">
+    <p>Nastavi si izbor vremenskih postaj.</p>
+    <form id="izbor-postaj-form" method="post">
+    @using web.Services.GetDataService;
+        @foreach(WeatherStation station in GetDataService.ws){
+            @if(station != null){
+                <input type="checkbox" id="@station.MeteoId" name="vremenskaPostaja" value="@station.MeteoId">
+                <label for="@station.MeteoId"> @station.Name</label><br>
+            }
+        }
+        <button id="izbor-postaj-form" type="submit" value="Submit" class="w-100 btn btn-lg btn-primary">Save</button>
+    </form>
+</div>
+
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }

@@ -2,6 +2,8 @@ using web.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using web.Models;
+using web.Services.GetDataService;
+using Newtonsoft.Json;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,6 +24,17 @@ builder.Services.AddDbContext<SchoolContext>(options =>
 builder.Services.AddHostedService<TimedHostedService>();
 
 var app = builder.Build();
+
+//test!!
+//app.MapGet("/test", () => "Hello World!");
+var handler = new Handler();
+app.MapGet("/pridobipostaje", handler.GetStations);
+
+app.MapGet("/odstranipostajo/{id}", async (string id) => handler.DeleteStation($"{id}"));
+
+app.MapGet("/posodobipostajo/{id}/{newname}", async (string id, string newname) => handler.UpdateStation($"{id}", $"{newname}"));
+
+app.MapGet("/vnesipostajo/{id}/{name}/{lat}/{lon}/{alt}", async (string id, string name, float lat, float lon, float alt) => handler.AddStation($"{id}", $"{name}", lat, lon, alt));
 
 CreateDbIfNotExists(app);
 
@@ -47,7 +60,6 @@ app.MapControllerRoute(
 
 app.Run();
 
-
 static void CreateDbIfNotExists(IHost host)
         {
             using (var scope = host.Services.CreateScope())
@@ -66,3 +78,36 @@ static void CreateDbIfNotExists(IHost host)
                 }
             }
         }
+
+class Handler{
+    public string GetStations()
+    {
+        //return "[\n\t{\n\t\"MeteoId:\": \"metropola\"\n\t}\n]";
+        int count = 0;
+        for(int i = 0; i < GetDataService.ws.Length; i++){
+            if(GetDataService.ws[i] != null)
+                count++;
+        }
+        WeatherStation[] ws2 = new WeatherStation[count];
+        for(int i = 0; i < ws2.Length; i++){
+            ws2[i] = GetDataService.ws[i];
+        }
+        var finalJson = JsonConvert.SerializeObject(ws2);
+        return finalJson;
+    }
+
+    public string DeleteStation(string id){
+        //pokliči metodo, k bo odstranla vnos iz baze
+        return id;
+    }
+
+    public string UpdateStation(string id, string newname){
+        //pokliči metodo, k bo posodobila vnos v bazi
+        return id;
+    }
+
+    public string AddStation(string id, string name, float lat, float lon, float alt){
+        //pokliči metodo, k bo dodala vnos v bazo
+        return id;
+    }
+}
