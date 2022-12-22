@@ -96,17 +96,17 @@ class Handler{
         return finalJson;
     }
 
-    public string DeleteStation(string id){
+    public string DeleteStation(string id){//DELETE USER
         //pokliči metodo, k bo odstranla vnos iz baze
         return id;
     }
 
-    public string UpdateStation(string id, string newname){
+    public string UpdateStation(string id, string newname){//UPDARE USER
         //pokliči metodo, k bo posodobila vnos v bazi
         return id;
     }
 
-    public string AddStation(string id, string name, float lat, float lon, float alt){
+    public string AddStation(string id, string name, float lat, float lon, float alt){//ADD USER
         //pokliči metodo, k bo dodala vnos v bazo
         return id;
     }
