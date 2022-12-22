@@ -12,6 +12,39 @@ namespace web.Controllers;
 
 public class Updater : Controller
 {
+
+    public static String[] PridobiVseIzbrane(string userID)
+    {
+        try{
+            using(SqlConnection cn=new SqlConnection("Server=uni-db.database.windows.net;Database=University;User Id=university-sa;Password=yourStrong(!)Password;"))
+            {
+
+                SqlDataReader x;
+
+                string query = "SELECT meteosiID FROM [dbo].[izbor] WHERE userID='"+userID+"';";
+
+                using(SqlCommand command = new SqlCommand(query, cn))
+                {
+                    cn.Open();
+                    x=command.ExecuteReader();
+                    x.Read();
+                    cn.Close();
+                }
+
+                List<String> list = new List<String>();
+
+                while(x.Read())
+                {
+                    list.Add((String)x.GetSqlString(45));
+                }
+                return list.ToArray();
+        }
+        }
+        catch(Exception e){
+            Console.WriteLine(e.StackTrace);
+            return null;
+        }
+    }
     public static void UpdateIzbira(string userID, string[] meteosiID)
     {
         try{
