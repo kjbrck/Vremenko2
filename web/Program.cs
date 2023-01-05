@@ -131,7 +131,7 @@ class Handler{
 
     public string AddStation(string id, string name, float lat, float lon, float alt){
         //pokliči metodo, k bo dodala vnos v bazo
-        string query = "INSERT INTO dbo.postaja VALUES(" + lon + ", " + lat + ", " + alt + ", " + name + ");";
+        string query = "INSERT INTO dbo.postaja VALUES(" + id + ", " + lon + ", " + lat + ", " + alt + ", " + name + ");";
             using(SqlConnection cn=new SqlConnection("Server=uni-db.database.windows.net;Database=University;User Id=university-sa;Password=yourStrong(!)Password;"))
                 {
                     using(SqlCommand command = new SqlCommand(query, cn))
