@@ -129,8 +129,19 @@ class Handler{
         return JsonConvert.SerializeObject(id);
     }
 
-    public string AddStation(string id, string name, float lat, float lon, float alt){//ADD USER
+    public string AddStation(string id, string name, float lat, float lon, float alt){
         //pokliči metodo, k bo dodala vnos v bazo
-        return id;
+        string query = "INSERT INTO dbo.postaja VALUES(" + lon + ", " + lat + ", " + alt + ", " + name + ");";
+            using(SqlConnection cn=new SqlConnection("Server=uni-db.database.windows.net;Database=University;User Id=university-sa;Password=yourStrong(!)Password;"))
+                {
+                    using(SqlCommand command = new SqlCommand(query, cn))
+                    {
+                        cn.Open();
+                        command.ExecuteReader();
+                        cn.Close();
+                        
+                    }
+                }
+        return JsonConvert.SerializeObject(id);
     }
 }
