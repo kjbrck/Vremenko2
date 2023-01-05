@@ -110,7 +110,7 @@ class Handler{
                         
                     }
                 }
-        return id;
+        return JsonConvert.SerializeObject(id);
     }
 
     public string UpdateUser(string id, string newname){//UPDARE USER
