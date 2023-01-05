@@ -33,7 +33,7 @@ app.MapGet("/pridobipostaje", handler.GetStations);
 
 app.MapGet("/odstraniuserja/{id}", async (string id) => handler.DeleteUser($"{id}"));
 
-app.MapGet("/posodobipostajo/{id}/{newname}", async (string id, string newname) => handler.UpdateStation($"{id}", $"{newname}"));
+app.MapGet("/posodobiuserja/{id}/{newname}", async (string id, string newname) => handler.UpdateUser($"{id}", $"{newname}"));
 
 app.MapGet("/vnesipostajo/{id}/{name}/{lat}/{lon}/{alt}", async (string id, string name, float lat, float lon, float alt) => handler.AddStation($"{id}", $"{name}", lat, lon, alt));
 
@@ -113,8 +113,19 @@ class Handler{
         return id;
     }
 
-    public string UpdateStation(string id, string newname){//UPDARE USER
+    public string UpdateUser(string id, string newname){//UPDARE USER
         //pokliči metodo, k bo posodobila vnos v bazi
+        string query = "UPDATE dbo.AspNetUsers set city = '" + newname + "' where Email = '" + id + "';";
+            using(SqlConnection cn=new SqlConnection("Server=uni-db.database.windows.net;Database=University;User Id=university-sa;Password=yourStrong(!)Password;"))
+                {
+                    using(SqlCommand command = new SqlCommand(query, cn))
+                    {
+                        cn.Open();
+                        command.ExecuteReader();
+                        cn.Close();
+                        
+                    }
+                }
         return id;
     }
 
