@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using web.Models;
 using web.Services.GetDataService;
 using Newtonsoft.Json;
+using System.Data.SqlClient;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -30,7 +31,7 @@ var app = builder.Build();
 var handler = new Handler();
 app.MapGet("/pridobipostaje", handler.GetStations);
 
-app.MapGet("/odstranipostajo/{id}", async (string id) => handler.DeleteStation($"{id}"));
+app.MapGet("/odstraniuserja/{id}", async (string id) => handler.DeleteUser($"{id}"));
 
 app.MapGet("/posodobipostajo/{id}/{newname}", async (string id, string newname) => handler.UpdateStation($"{id}", $"{newname}"));
 
@@ -96,8 +97,19 @@ class Handler{
         return finalJson;
     }
 
-    public string DeleteStation(string id){//DELETE USER
+    public string DeleteUser(string id){//DELETE USER
         //pokliči metodo, k bo odstranla vnos iz baze
+        string query = "DELETE FROM dbo.AspNetUsers where Email = '" + id + "';";
+            using(SqlConnection cn=new SqlConnection("Server=uni-db.database.windows.net;Database=University;User Id=university-sa;Password=yourStrong(!)Password;"))
+                {
+                    using(SqlCommand command = new SqlCommand(query, cn))
+                    {
+                        cn.Open();
+                        command.ExecuteReader();
+                        cn.Close();
+                        
+                    }
+                }
         return id;
     }
 

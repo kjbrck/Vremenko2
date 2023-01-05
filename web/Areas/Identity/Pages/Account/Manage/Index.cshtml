@@ -27,7 +27,7 @@
 <br>
 <div class="row col-md-6">
     <p>Nastavi si izbor vremenskih postaj.</p>
-    <form method="post" runat="server">
+    <form method="post" runat="server" id="izbor-postaj-form">
     @using web.Services.GetDataService;
         @foreach(WeatherStation station in GetDataService.ws){
             @if(station != null){
@@ -36,7 +36,7 @@
             }
         }
         <button id="izbor-postaj-form" type="submit" value="" class="w-100 btn btn-lg btn-primary">Save</button>
-        <asp:TextBox id="placeholder" runat="server" name="placeholder"/>
+        <input type="hidden" id="placeholder" runat="server" name="placeholder"/>
         
     </form>
 </div>
