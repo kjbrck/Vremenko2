@@ -126,7 +126,7 @@ class Handler{
                         
                     }
                 }
-        return id;
+        return JsonConvert.SerializeObject(id);
     }
 
     public string AddStation(string id, string name, float lat, float lon, float alt){//ADD USER
