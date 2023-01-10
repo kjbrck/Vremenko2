@@ -4,7 +4,9 @@ Avtorja: Matija Keber, Matej Rupnik
 
 Slike:
 
-1. Grafični vmesnik spletne Aplikacije (2-3)
+1. Grafični vmesnik spletne Aplikacije
+![Slika Spletne Aplikacije](url "/Vremenko2/web/wwwroot/img/Spletna.png")
+
 2. Grafični vmesnik mobilne Aplikacije (2)
 
 Opis delovanja clotnega sistema:
@@ -20,3 +22,4 @@ Matija Keber: Spletna stran, Spletna storitev, Podatkovna baza
 Matej Rupnik: Preslikava XML v Podatkovno bazo, Povezava na podatkovno bazo, Mobilna aplikacija
 
 Slika podatkovnega modela podatkovne baze:
+![Alt text](url "Title")
