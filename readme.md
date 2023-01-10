@@ -12,6 +12,8 @@ Slike:
 
 ![App Aplikacije](web/wwwroot/img/App.png)
 
+Izbris uporabnika na mobilni aplikaciji
+
 ![App Izbris Uporabnika](web/wwwroot/img/Aizbris.png)
 
 Opis delovanja clotnega sistema:
@@ -24,6 +26,7 @@ Iz podatkovne baze strežnik ob zahtevi uporabnika prikaže najnovejše podatke 
 Delitev dela:
 
 Matija Keber: Spletna stran, Spletna storitev, Podatkovna baza
+
 Matej Rupnik: Preslikava XML v Podatkovno bazo, Povezava na podatkovno bazo, Mobilna aplikacija
 
 Slika podatkovnega modela podatkovne baze:
