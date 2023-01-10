@@ -8,6 +8,9 @@ Slike:
 
 ![Slika Spletne Aplikacije](web/wwwroot/img/Spletna.jpg)
 
+![Slika Registracije uporabnika na Spletni Aplikaciji](web/wwwroot/img/Reg.jpg)
+
+
 2. Grafični vmesnik mobilne Aplikacije
 
 ![App Aplikacije](web/wwwroot/img/App.png)
