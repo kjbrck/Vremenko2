@@ -2,6 +2,10 @@ Naslov projekta: VREMENKO
 
 Avtorja: Matija Keber, Matej Rupnik
 
+Povezava do Spletne Strani: https://vremenkoo.azurewebsites.net/
+
+Povezava do git-a Aplikacije: https://github.com/mr6231/vremenkoApp
+
 Slike:
 
 1. Grafični vmesnik spletne Aplikacije
