@@ -8,7 +8,8 @@ Slike:
 ![Slika Spletne Aplikacije](web/wwwroot/img/Spletna.jpg)
 
 2. Grafični vmesnik mobilne Aplikacije (2)
-
+![App Aplikacije](web/wwwroot/img/App.jpg)
+![App Izbris Uporabnika](web/wwwroot/img/Aizbris.jpg)
 Opis delovanja clotnega sistema:
 
 Vremenko je spletna rešitev, ki trenutno vremensko stanje iz vremenskih postaj prikaže na spletu in na mobilni aplikaciji.
