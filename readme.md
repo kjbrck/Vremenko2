@@ -12,6 +12,8 @@ Slike:
 
 ![App Aplikacije](web/wwwroot/img/App.png)
 
+Izbris uporabnika na mobilni aplikaciji
+
 ![App Izbris Uporabnika](web/wwwroot/img/Aizbris.png)
 
 Opis delovanja clotnega sistema:
