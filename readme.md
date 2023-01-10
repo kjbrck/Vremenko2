@@ -5,11 +5,15 @@ Avtorja: Matija Keber, Matej Rupnik
 Slike:
 
 1. Grafični vmesnik spletne Aplikacije
+
 ![Slika Spletne Aplikacije](web/wwwroot/img/Spletna.jpg)
 
-2. Grafični vmesnik mobilne Aplikacije (2)
+2. Grafični vmesnik mobilne Aplikacije
+
 ![App Aplikacije](web/wwwroot/img/App.png)
+
 ![App Izbris Uporabnika](web/wwwroot/img/Aizbris.png)
+
 Opis delovanja clotnega sistema:
 
 Vremenko je spletna rešitev, ki trenutno vremensko stanje iz vremenskih postaj prikaže na spletu in na mobilni aplikaciji.
