@@ -5,6 +5,7 @@
     ViewData["ActivePage"] = ManageNavPages.Index;
 }
 
+<%@Page Language="C#" CodeFile="this"%>
 <h3>@ViewData["Title"]</h3>
 <partial name="_StatusMessage" for="StatusMessage" />
 <div class="row">
@@ -23,12 +24,10 @@
             <button id="update-profile-button" type="submit" class="w-100 btn btn-lg btn-primary">Save</button>
         </form>
     </div>
-</div>
-
 <br>
 <div class="row col-md-6">
     <p>Nastavi si izbor vremenskih postaj.</p>
-    <form id="izbor-postaj-form" method="post">
+    <form method="post" runat="server" id="izbor-postaj-form">
     @using web.Services.GetDataService;
         @foreach(WeatherStation station in GetDataService.ws){
             @if(station != null){
@@ -36,9 +35,25 @@
                 <label for="@station.MeteoId"> @station.Name</label><br>
             }
         }
-        <button id="izbor-postaj-form" type="submit" value="Submit" class="w-100 btn btn-lg btn-primary">Save</button>
+        <button id="izbor-postaj-form" type="submit" value="" class="w-100 btn btn-lg btn-primary">Save</button>
+        <input type="hidden" id="placeholder" runat="server" name="placeholder"/>
+        
     </form>
 </div>
+<script runat="server">  
+document.getElementById('izbor-postaj-form').onclick = function() {  
+  var markedCheckbox = document.getElementsByName('vremenskaPostaja');  
+  const postaje = [];
+  var i = 0;
+  for (var checkbox of markedCheckbox) {  
+    if (checkbox.checked){
+      //document.body.append(checkbox.value + ' ');
+      postaje[i] = checkbox.value;
+      document.getElementById("placeholder").value += checkbox.value + " ";
+    }
+  }
+}  
+</script>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />

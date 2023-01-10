@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using web.Models;
 using web.Services.GetDataService;
 using Newtonsoft.Json;
+using System.Data.SqlClient;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -30,9 +31,9 @@ var app = builder.Build();
 var handler = new Handler();
 app.MapGet("/pridobipostaje", handler.GetStations);
 
-app.MapGet("/odstranipostajo/{id}", async (string id) => handler.DeleteStation($"{id}"));
+app.MapGet("/odstraniuserja/{id}", async (string id) => handler.DeleteUser($"{id}"));
 
-app.MapGet("/posodobipostajo/{id}/{newname}", async (string id, string newname) => handler.UpdateStation($"{id}", $"{newname}"));
+app.MapGet("/posodobiuserja/{id}/{newname}", async (string id, string newname) => handler.UpdateUser($"{id}", $"{newname}"));
 
 app.MapGet("/vnesipostajo/{id}/{name}/{lat}/{lon}/{alt}", async (string id, string name, float lat, float lon, float alt) => handler.AddStation($"{id}", $"{name}", lat, lon, alt));
 
@@ -96,18 +97,51 @@ class Handler{
         return finalJson;
     }
 
-    public string DeleteStation(string id){//DELETE USER
+    public string DeleteUser(string id){//DELETE USER
         //pokliči metodo, k bo odstranla vnos iz baze
-        return id;
+        string query = "DELETE FROM dbo.AspNetUsers where Email = '" + id + "';";
+            using(SqlConnection cn=new SqlConnection("Server=uni-db.database.windows.net;Database=University;User Id=university-sa;Password=yourStrong(!)Password;"))
+                {
+                    using(SqlCommand command = new SqlCommand(query, cn))
+                    {
+                        cn.Open();
+                        command.ExecuteReader();
+                        cn.Close();
+                        
+                    }
+                }
+        return JsonConvert.SerializeObject(id);
     }
 
-    public string UpdateStation(string id, string newname){//UPDARE USER
+    public string UpdateUser(string id, string newname){//UPDARE USER
         //pokliči metodo, k bo posodobila vnos v bazi
-        return id;
+        string query = "UPDATE dbo.AspNetUsers set city = '" + newname + "' where Email = '" + id + "';";
+            using(SqlConnection cn=new SqlConnection("Server=uni-db.database.windows.net;Database=University;User Id=university-sa;Password=yourStrong(!)Password;"))
+                {
+                    using(SqlCommand command = new SqlCommand(query, cn))
+                    {
+                        cn.Open();
+                        command.ExecuteReader();
+                        cn.Close();
+                        
+                    }
+                }
+        return JsonConvert.SerializeObject(id);
     }
 
-    public string AddStation(string id, string name, float lat, float lon, float alt){//ADD USER
+    public string AddStation(string id, string name, float lat, float lon, float alt){
         //pokliči metodo, k bo dodala vnos v bazo
-        return id;
+        string query = "INSERT INTO dbo.postaja VALUES('" + id + "', " + lon + ", " + lat + ", " + alt + ", '" + name + "');";
+            using(SqlConnection cn=new SqlConnection("Server=uni-db.database.windows.net;Database=University;User Id=university-sa;Password=yourStrong(!)Password;"))
+                {
+                    using(SqlCommand command = new SqlCommand(query, cn))
+                    {
+                        cn.Open();
+                        command.ExecuteReader();
+                        cn.Close();
+                        
+                    }
+                }
+        return JsonConvert.SerializeObject(id);
     }
 }
