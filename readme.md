@@ -37,4 +37,4 @@ Matija Keber: Spletna stran, Spletna storitev, Podatkovna baza
 Matej Rupnik: Preslikava XML v Podatkovno bazo, Povezava na podatkovno bazo, Mobilna aplikacija
 
 Slika podatkovnega modela podatkovne baze:
-![Alt text](url "Title")
+![](web/wwwroot/img/vremenko_eer.svg)
