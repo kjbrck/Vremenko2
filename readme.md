@@ -1,78 +1,22 @@
-# Zapiski
+Naslov projekta: VREMENKO
 
-## Navodila
-### Vaja 04
+Avtorja: Matija Keber, Matej Rupnik
 
-Kot osnovo za začetek vzamemo rešitev vaje 03.
+Slike:
 
+1. Grafični vmesnik spletne Aplikacije (2-3)
+2. Grafični vmesnik mobilne Aplikacije (2)
 
-1. V rešitev namestimo knjižnico `Microsoft.AspNetCore.Identity.EntityFrameworkCore` in `Microsoft.AspNetCore.Identity.UI` aktualne verzije. Uporabimo NuGet package manager (Package manager, .NET cli ali PackageReference v .csproj).
-```bash
-dotnet add package Microsoft.AspNetCore.Identity.EntityFrameworkCore --version 6.0.10
-dotnet add package Microsoft.AspNetCore.Identity.UI --version 6.0.10
-dotnet add package Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore --version 6.0.10
-```
-2. V Models dodamo nov razred `ApplicationUser.cs`, ki deduje razred `IdentityUser` (
-iz knjižnice `Microsoft.AspNetCore.Identity`). Razredu dodamo atribute `FirstName`, `LastName`, `City`. 
-```csharp
-using Microsoft.AspNetCore.Identity;
+Opis delovanja clotnega sistema:
 
-namespace web.Models;
+Vremenko je spletna rešitev, ki trenutno vremensko stanje iz vremenskih postaj prikaže na spletu in na mobilni aplikaciji.
+Podatke o vremenskem stanju rešitev pridobiva na vsako minuto preko javnega XML dokumenta organizacije ARSO, ki je dostopna na naslednji povezavi: "https://meteo.arso.gov.si/uploads/probase/www/observ/surface/text/sl/observation_si_latest.xml"
+Strežnik vsebino XML datoteke prebere in iz nje izvleče določene podatke, ki jih nato zapiše v podatkovno bazo.
+Iz podatkovne baze strežnik ob zahtevi uporabnika prikaže najnovejše podatke za vsako od vremenskih postaj.
 
-public class ApplicationUser : IdentityUser
-{
-    public string? FirstName { get; set; }
-    public string? LastName { get; set; }
-    public string? City { get; set; }
+Delitev dela:
 
-}
-```
-3. V datoteki `SchoolContext.cs` dodamo `using Microsoft.AspNetCore.Identity.EntityFrameworkCore;` in spremenimo dedovanje (`: IdentityDbContext<ApplicationUser>`) in dodamo vrstico `base.OnModelCreating(modelBuilder);` v `OnModelCreating()`.
-4. Ustvarimo migracije in jih izvedemo na bazo.
-```bash
-dotnet ef migrations add AppUser
-# izbrišemo obstoječo bazo s podatki in nato ustvarimo novo
-dotnet ef database drop
-dotnet ef database update
-```
-5. Zaženemo generator kode za Identity:
-```bash
-dotnet-aspnet-codegenerator identity -dc web.Data.SchoolContext --generateLayout
+Matija Keber: Spletna stran, Spletna storitev, Podatkovna baza
+Matej Rupnik: Preslikava XML v Podatkovno bazo, Povezava na podatkovno bazo, Mobilna aplikacija
 
-#ali (samo določene view-e)
-dotnet-aspnet-codegenerator identity -dc web.Data.SchoolContext -fi "Account.Register;Account.Login;Account.Logout;Account.RegisterConfirmation" --generateLayout
-```
-
-6. Zamenjaj v Program.cs:
-```csharp
-// uvozi
-using web.Models;
-
-// nastavi spremenljivko connectionString za .useSqlServer(connectionString)
-var connectionString = builder.Configuration.GetConnectionString("SchoolContext");
-
-// odstrani stari .AddDbContext
-//builder.Services.AddDbContext<SchoolContext>(options =>
-//            options.UseSqlServer(builder.Configuration.GetConnectionString("SchoolContext")));
-
-// prilagodi RequireConfirmedAccount = false in .AddRoles<IdentityRole>()
-builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = false)
-    .AddRoles<IdentityRole>()
-    .AddEntityFrameworkStores<SchoolContext>();
-
-// dodatj app.MapRazorPages(); (npr. za app.useAuthentication())
-app.MapRazorPages();
-```
-
-7. Dodamo `<partial name="_LoginPartial" />` v `/Views/Shared/_Layout.cshtml` (na koncu znotraj elementa `<div class="navbar-collapse..."></div>`).
-8. Dodamo avtorizacijo na posamezne metode v StudentsController.cs in nad celoten CourseController. `[Authorize]` in `using Microsoft.AspNetCore.Authorization;`
-9. Razširimo Course.cs z lastnostmi `Owner`, `DateCreated`, `DateEdited`.
-10. Posodobimo bazo.
-```bash
-dotnet ef migrations add ExtendCourse
-dotnet ef database update
-```
-11. Ob kreiranju novega predmeta v `Course.OwnerId` zapišemo id trenutno prijavljenega uporabnika.
-12. V tabelo `AspNetRoles` dodaj 3 različne vloge (Administrator, Manager, Staff). Vloge dodeliš uporabniku z zapisi v tabeli AspNetUserRoles (zapis: id vloge | id uporabnika).
-13. Omeji dostop do operacij v CourseController.cs s pomočjo `[Authorize(Roles = "Administrator, Manager, Staff")]`.
-14. Dopolni `DbInitializer.cs` za vnos podatkov o uporabniku, vlogah in povezavi med uporabnikom ter vlogo.
+Slika podatkovnega modela podatkovne baze:
