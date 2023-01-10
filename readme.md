@@ -5,7 +5,7 @@ Avtorja: Matija Keber, Matej Rupnik
 Slike:
 
 1. Grafični vmesnik spletne Aplikacije
-![Slika Spletne Aplikacije](url "/web/wwwroot/img/Spletna.png")
+![Slika Spletne Aplikacije](url "web/wwwroot/img/Spletna.jpg")
 
 2. Grafični vmesnik mobilne Aplikacije (2)
 
