@@ -6,6 +6,8 @@ Povezava do Spletne Strani: https://vremenkoo.azurewebsites.net/
 
 Povezava do git-a Aplikacije: https://github.com/mr6231/vremenkoApp
 
+Povezava do JSON API: https://vremenkoo.azurewebsites.net/pridobipostaje
+
 Slike:
 
 1. Grafični vmesnik spletne Aplikacije
